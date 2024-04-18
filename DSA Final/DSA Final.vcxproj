@@ -141,6 +141,9 @@
   <ItemGroup>
     <ClCompile Include="DSA Final.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Courses.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
