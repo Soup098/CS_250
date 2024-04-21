@@ -16,7 +16,7 @@
 
 using namespace std;
 
-struct Course {
+struct Course {// structure for the courses to be loaded into. everything after the second string in the file gets loaded onto the preReqs vector
     string Id;
     string Name;
     vector<string> preReqs;
@@ -33,14 +33,14 @@ struct Node {
         right = nullptr;
     }
 
-    //initialize with course
+    //initialize the Node structure with a course
     Node(Course aCourse) :
         Node() {
         course = aCourse;
     }
 };
 
-class BinaryTree {//COMMENT HERE
+class BinaryTree {//Declaration of the binary tree class with private and public members
     private:
 
         Node* root;
@@ -52,23 +52,23 @@ class BinaryTree {//COMMENT HERE
         Course* Search(const string& courseId);
 };
 
-BinaryTree::BinaryTree() : root(nullptr) {}//COMMENT HERE
+BinaryTree::BinaryTree() : root(nullptr) {}//Constructor for the BinaryTree class. Initializes the root variable of the binary tree to an empty pointer
 
-void BinaryTree::InOrder() {//COMMENT HERE
+void BinaryTree::InOrder() {//Defining the InOrder public member of the BinaryTree class. this 
     inOrder(root);
 }
 
-void BinaryTree::inOrder(Node* node) {//COMMENT HERE
+void BinaryTree::inOrder(Node* node) {//Recursive function that performs an in order traversal of the binary tree
     if (node != nullptr) {
         inOrder(node->left);
         cout << endl;
-        if (!node->course.preReqs.empty()) {
+        if (!node->course.preReqs.empty()) {// if there is anything contained in the preReqs vector, those items will be printed
             cout << "Course ID: " << node->course.Id << ", Course Name: " << node->course.Name << ", Prerequisites: ";
             for (const string& prereq : node->course.preReqs) {
                 cout << prereq << " ";
             }  
         }
-        else {
+        else {// if nothing in vector, this else statement will execute
             cout << "Course ID: " << node->course.Id << ", Course Name: " << node->course.Name;
         }
         inOrder(node->right);
@@ -76,16 +76,16 @@ void BinaryTree::inOrder(Node* node) {//COMMENT HERE
     
 }
 
-void BinaryTree::Insert(const Course& course) {//COMMENT HERE
+void BinaryTree::Insert(const Course& course) {//Function to insert a new course into the binary tree. Called within the LoadCourses() function toinsert course into tree after loading from file
     Node* newNode = new Node(course);
 
-    if (root == nullptr) {
+    if (root == nullptr) {// if the root is empty, the course is inserted at the root.
         root = newNode;
         return;
     }
 
     Node* current = root;
-    while (current != nullptr) {
+    while (current != nullptr) {// if the root is not empty, the tree is traversed to find the correct position for the course
         if (course.Id < current->course.Id) {
             if (current->left == nullptr) {
                 current->left = newNode;
@@ -103,28 +103,28 @@ void BinaryTree::Insert(const Course& course) {//COMMENT HERE
     }
 }
 
-Course* BinaryTree::Search(const string& courseId) {// COMMENT HERE
-    Node* current = root;
+Course* BinaryTree::Search(const string& courseId) {//Function to search for a course based on the input from the user. 
+    Node* current = root;// current variable set to the root of the tree
     
-    while (current != nullptr) {
-        if (courseId == current->course.Id) {
+    while (current != nullptr) {// while the root is not empty
+        if (courseId == current->course.Id) {// if current course id matches user search, return that course
             return &(current->course);
         }
-        else if (courseId < current->course.Id) {
+        else if (courseId < current->course.Id) {//  if user input is less than current id, go left
             current = current->left;
         }
         else {
-            current = current->right;
+            current = current->right;//  if user input is greater than current id, go right
         }
     }
-    return nullptr;
+    return nullptr;// return nullptr if the course does not exist in the tree
 }
 
-void loadCourses(BinaryTree& tree, const string& filename) {// COMMENT HERE
+void loadCourses(BinaryTree& tree, const string& filename) {//this function is responsible for loading the information from the file into the course structure.
     ifstream file(filename);
     string line;
 
-    if (file.is_open()) {//COMMENT HERE
+    if (file.is_open()) {//if the file was successfully opened, perform the tasks to load the information into the course tructure.
         while (getline(file, line)) {
             Course newCourse;
             istringstream iss(line);
@@ -143,10 +143,10 @@ void loadCourses(BinaryTree& tree, const string& filename) {// COMMENT HERE
 
             tree.Insert(newCourse);
         }
-        file.close();
+        file.close();// close the file after the operation
     }
     else {
-        cerr << "file not opened" << "Course.txt" << endl;
+        cerr << "file not opened" << "Course.txt" << endl;// print a message if the file fails to open.
     }
 }
 
