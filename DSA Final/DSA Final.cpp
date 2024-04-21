@@ -40,7 +40,7 @@ struct Node {
     }
 };
 
-class BinaryTree {
+class BinaryTree {//COMMENT HERE
     private:
 
         Node* root;
@@ -52,16 +52,15 @@ class BinaryTree {
         Course* Search(const string& courseId);
 };
 
-BinaryTree::BinaryTree() : root(nullptr) {}
+BinaryTree::BinaryTree() : root(nullptr) {}//COMMENT HERE
 
-void BinaryTree::InOrder() {
+void BinaryTree::InOrder() {//COMMENT HERE
     inOrder(root);
 }
 
-void BinaryTree::inOrder(Node* node) {
+void BinaryTree::inOrder(Node* node) {//COMMENT HERE
     if (node != nullptr) {
         inOrder(node->left);
-        //cout << "Course ID: " << node->course.Id << ", Course Name: " << node->course.Name;
         cout << endl;
         if (!node->course.preReqs.empty()) {
             cout << "Course ID: " << node->course.Id << ", Course Name: " << node->course.Name << ", Prerequisites: ";
@@ -77,7 +76,7 @@ void BinaryTree::inOrder(Node* node) {
     
 }
 
-void BinaryTree::Insert(const Course& course) {
+void BinaryTree::Insert(const Course& course) {//COMMENT HERE
     Node* newNode = new Node(course);
 
     if (root == nullptr) {
@@ -104,7 +103,7 @@ void BinaryTree::Insert(const Course& course) {
     }
 }
 
-Course* BinaryTree::Search(const string& courseId) {
+Course* BinaryTree::Search(const string& courseId) {// COMMENT HERE
     Node* current = root;
     
     while (current != nullptr) {
@@ -121,11 +120,11 @@ Course* BinaryTree::Search(const string& courseId) {
     return nullptr;
 }
 
-void loadCourses(BinaryTree& tree, const string& filename) {
+void loadCourses(BinaryTree& tree, const string& filename) {// COMMENT HERE
     ifstream file(filename);
     string line;
 
-    if (file.is_open()) {
+    if (file.is_open()) {//COMMENT HERE
         while (getline(file, line)) {
             Course newCourse;
             istringstream iss(line);
@@ -152,10 +151,10 @@ void loadCourses(BinaryTree& tree, const string& filename) {
 }
 
 int main() {
-    BinaryTree tree;
-    int choice = 0;
+    BinaryTree tree;// create new binary tree object called tree
+    int choice = 0;//initiate the users choice at 0
 
-    while (choice != 4) {
+    while (choice != 4) {// menu for user choices
         cout << endl;
         cout << "Please make a selection" << endl;
         cout << "1: Load Data Structure" << endl;
@@ -166,15 +165,15 @@ int main() {
         cin >> choice;
 
         switch (choice){
-            case 1:
+            case 1:// user choice number one loads the courses from the file into the program.
                 loadCourses(tree, "Courses.txt");
                 cout << endl;
                 cout << "File Loaded" << endl;
                 break;
-            case 2: 
+            case 2: // user choice number two prints out all of the courses in the file
                 tree.InOrder();
                 break;
-            case 3:
+            case 3:// user choice number 3 takes the course ID as an input and outputs the course in question
             {
                 string courseId;
                 cout << "Enter ID for course you wish to see: ";
@@ -191,7 +190,7 @@ int main() {
             }
                 
             break;
-            case 4:
+            case 4: // user choice 4 outputs a farewall message and breaks the while loop, exiting the program
                 cout << endl;
                 cout << "Have a nice day" << endl;
                 break;
